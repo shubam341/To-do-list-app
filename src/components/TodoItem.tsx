@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Check, Edit2, Trash2, Calendar, AlertCircle } from 'lucide-react';
-// import { format, isToday, isTomorrow, isPast } from 'date-fns';
+import { format, isToday, isTomorrow, isPast } from 'date-fns';
 import { Todo } from '../contexts/TodoContext';
 
 interface TodoItemProps {
@@ -52,7 +52,7 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemP
 
   const getDueDateStatus = (dueDate?: Date) => {
     if (!dueDate) return null;
-    
+
     if (isPast(dueDate) && !isToday(dueDate)) {
       return { text: 'Overdue', color: 'text-red-500' };
     }
@@ -78,7 +78,6 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemP
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             autoFocus
           />
-          
           <div className="flex gap-2">
             <input
               type="date"
@@ -86,7 +85,6 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemP
               onChange={(e) => setEditDueDate(e.target.value)}
               className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             />
-            
             <select
               value={editPriority}
               onChange={(e) => setEditPriority(e.target.value as 'low' | 'medium' | 'high')}
@@ -97,7 +95,6 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemP
               <option value="high">High</option>
             </select>
           </div>
-          
           <div className="flex gap-2">
             <button
               onClick={handleSave}
@@ -118,9 +115,11 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemP
   }
 
   return (
-    <div className={`bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 transition-all hover:shadow-md ${
-      todo.completed ? 'opacity-60' : ''
-    }`}>
+    <div
+      className={`bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 transition-all hover:shadow-md ${
+        todo.completed ? 'opacity-60' : ''
+      }`}
+    >
       <div className="flex items-start gap-3">
         <button
           onClick={() => onToggle(todo.id)}
@@ -135,24 +134,28 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemP
         </button>
 
         <div className="flex-1 min-w-0">
-          <p className={`text-gray-900 dark:text-white transition-all ${
-            todo.completed ? 'line-through text-gray-500 dark:text-gray-400' : ''
-          }`}>
+          <p
+            className={`text-gray-900 dark:text-white transition-all ${
+              todo.completed ? 'line-through text-gray-500 dark:text-gray-400' : ''
+            }`}
+          >
             {todo.text}
           </p>
-          
+
           <div className="flex items-center gap-2 mt-2">
-            <span className={`px-2 py-1 rounded-full text-xs font-medium ${getPriorityColor(todo.priority)}`}>
+            <span
+              className={`px-2 py-1 rounded-full text-xs font-medium ${getPriorityColor(
+                todo.priority
+              )}`}
+            >
               {todo.priority}
             </span>
-            
+
             {dueDateStatus && (
               <div className={`flex items-center gap-1 text-xs ${dueDateStatus.color}`}>
                 <Calendar size={12} />
                 <span>{dueDateStatus.text}</span>
-                {isPast(todo.dueDate!) && !isToday(todo.dueDate!) && (
-                  <AlertCircle size={12} />
-                )}
+                {isPast(todo.dueDate!) && !isToday(todo.dueDate!) && <AlertCircle size={12} />}
               </div>
             )}
           </div>
