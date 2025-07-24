@@ -30,7 +30,7 @@ function TodoApp() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
       <div className="max-w-md mx-auto px-4 py-6">
-        {/* Header */}
+        {/* Title */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-2">
             <CheckSquare className="text-blue-500" size={32} />
@@ -50,12 +50,12 @@ function TodoApp() {
           pendingTasks={todoCount.pending}
         />
 
-        {/* Add Todo Form */}
+        {/* Add Task */}
         <div className="mb-6">
           <AddTodoForm onAdd={addTodo} />
         </div>
 
-        {/* Filter Bar */}
+        {/* Filters */}
         <div className="mb-6">
           <FilterBar
             filter={state.filter}
@@ -111,6 +111,7 @@ function TodoApp() {
         </div>
       </div>
 
+      {/* Toast Notifications */}
       <Toaster
         position="top-center"
         toastOptions={{
